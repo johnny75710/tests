@@ -1,0 +1,28 @@
+<.header>
+  Airplane {@airplane.id}
+  <:subtitle>This is a airplane record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/airplanes/#{@airplane}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit airplane</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Model">{@airplane.model}</:item>
+  <:item title="Capacity">{@airplane.capacity}</:item>
+  <:item title="Status">{@airplane.status}</:item>
+</.list>
+
+<.back navigate={~p"/airplanes"}>Back to airplanes</.back>
+
+<.modal :if={@live_action == :edit} id="airplane-modal" show on_cancel={JS.patch(~p"/airplanes/#{@airplane}")}>
+  <.live_component
+    module={TestsWeb.AirplaneLive.FormComponent}
+    id={@airplane.id}
+    title={@page_title}
+    action={@live_action}
+    airplane={@airplane}
+    patch={~p"/airplanes/#{@airplane}"}
+  />
+</.modal>
